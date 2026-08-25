@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request, url_for
 
-from database.db import get_db, init_db, seed_db
+from database.db import create_user, get_db, init_db, seed_db
 
 
 app = Flask(__name__)
@@ -19,9 +19,50 @@ def landing():
     return render_template("landing.html")
 
 
-@app.route("/register")
+def render_register(error=None, name="", email=""):
+    return render_template(
+        "register.html",
+        error=error,
+        name=name,
+        email=email,
+    )
+
+
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    if request.method == "GET":
+        return render_register()
+
+    name = request.form.get("name", "")
+    email = request.form.get("email", "")
+    password = request.form.get("password", "")
+    trimmed_name = name.strip()
+    trimmed_email = email.strip()
+
+    if not trimmed_name:
+        return render_register("Please enter your full name.", name, email)
+
+    if not trimmed_email:
+        return render_register("Please enter your email address.", name, email)
+
+    if not password:
+        return render_register("Please enter a password.", name, email)
+
+    if len(password) < 8:
+        return render_register(
+            "Password must be at least 8 characters.",
+            name,
+            email,
+        )
+
+    if not create_user(trimmed_name, trimmed_email, password):
+        return render_register(
+            "An account with that email address already exists.",
+            name,
+            email,
+        )
+
+    return redirect(url_for("login"))
 
 
 @app.route("/login")
