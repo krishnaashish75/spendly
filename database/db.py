@@ -52,6 +52,27 @@ def init_db():
         connection.close()
 
 
+def create_user(name, email, password):
+    connection = get_db()
+
+    try:
+        cursor = connection.execute(
+            """
+            INSERT INTO users (name, email, password_hash)
+            VALUES (?, ?, ?)
+            ON CONFLICT(email) DO NOTHING
+            """,
+            (name, email, generate_password_hash(password)),
+        )
+        connection.commit()
+        return cursor.rowcount == 1
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.close()
+
+
 def seed_db():
     connection = get_db()
 
