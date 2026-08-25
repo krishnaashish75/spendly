@@ -1,9 +1,15 @@
-from flask import Flask, redirect, render_template, request, url_for
+import os
 
-from database.db import create_user, get_db, init_db, seed_db
+from flask import Flask, redirect, render_template, request, session, url_for
+
+from database.db import authenticate_user, create_user, init_db, seed_db
 
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.environ.get(
+    "SPENDLY_SECRET_KEY",
+    "development-only-secret-key",
+)
 
 with app.app_context():
     init_db()
@@ -30,6 +36,9 @@ def render_register(error=None, name="", email=""):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if session.get("user_id"):
+        return redirect(url_for("profile"))
+
     if request.method == "GET":
         return render_register()
 
@@ -65,9 +74,39 @@ def register():
     return redirect(url_for("login"))
 
 
-@app.route("/login")
+def render_login(error=None, email=""):
+    return render_template(
+        "login.html",
+        error=error,
+        email=email,
+    )
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if session.get("user_id"):
+        return redirect(url_for("profile"))
+
+    if request.method == "GET":
+        return render_login()
+
+    email = request.form.get("email", "")
+    password = request.form.get("password", "")
+    trimmed_email = email.strip()
+
+    if not trimmed_email:
+        return render_login("Please enter your email address.", email)
+
+    if not password:
+        return render_login("Please enter your password.", email)
+
+    user = authenticate_user(trimmed_email, password)
+    if not user:
+        return render_login("Invalid email or password.", email)
+
+    session.clear()
+    session["user_id"] = user["id"]
+    return redirect(url_for("profile"))
 
 
 @app.route("/terms")
@@ -86,12 +125,13 @@ def privacy():
 
 @app.route("/logout")
 def logout():
-    return "Logout — coming in Step 3"
+    session.clear()
+    return redirect(url_for("landing"))
 
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    return render_template("profile.html")
 
 
 @app.route("/expenses/add")
