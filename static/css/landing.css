@@ -1,0 +1,304 @@
+/* ------------------------------------------------------------------ */
+/* Landing hero                                                        */
+/* ------------------------------------------------------------------ */
+
+.hero {
+    --hero-green: #159d78;
+    --hero-green-soft: #e2f6ef;
+    --hero-ink: #101010;
+    --hero-muted: #696969;
+    --hero-frame: #f8f8f6;
+    --hero-border: #e1dfda;
+    --hero-track: #eeece7;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4.5rem;
+    max-width: none;
+    margin: 0;
+    padding: 4.5rem 2rem 5rem;
+    text-align: center;
+}
+
+.hero .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+}
+
+.hero .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: var(--hero-green-soft);
+    border: 1px solid #9de2cb;
+    border-radius: 999px;
+    color: #087559;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    margin: 0 0 3rem;
+    padding: 0.35rem 1.35rem;
+    text-transform: none;
+}
+
+.hero .hero-badge span {
+    width: 0.6rem;
+    height: 0.6rem;
+    background: #1aaa82;
+    border-radius: 50%;
+}
+
+.hero .hero-title {
+    color: var(--hero-ink);
+    font-family: var(--font-body);
+    font-size: clamp(3rem, 6vw, 4.75rem);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 1.08;
+    margin: 0;
+}
+
+.hero .hero-title span { display: block; }
+
+.hero .hero-title span + span { color: var(--hero-green); }
+
+.hero .hero-subtitle {
+    color: var(--hero-muted);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.55;
+    max-width: 760px;
+    margin: 2.25rem 0 0;
+}
+
+.hero .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.75rem;
+}
+
+.hero .btn-primary,
+.hero .btn-ghost {
+    background: var(--hero-ink);
+    border: 1px solid var(--hero-ink);
+    border-radius: 1rem;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.2;
+    min-width: 18rem;
+    padding: 1.1rem 1.75rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.hero .btn-primary:hover,
+.hero .btn-ghost:hover {
+    background: #262626;
+    border-color: #262626;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.hero .btn-primary:focus-visible,
+.hero .btn-ghost:focus-visible {
+    outline: 3px solid var(--hero-green);
+    outline-offset: 3px;
+}
+
+.hero .hero-visual {
+    display: block;
+    width: min(100%, 1000px);
+}
+
+.hero .mock-card {
+    max-width: none;
+    width: 100%;
+    background: var(--hero-frame);
+    border: 1px solid var(--hero-border);
+    border-radius: 1.4rem;
+    box-shadow: none;
+    padding: 1.7rem;
+}
+
+.hero .mock-window-bar {
+    display: flex;
+    gap: 0.65rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero .mock-window-bar span {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+}
+
+.hero .mock-window-bar span:nth-child(1) { background: #ef9090; }
+.hero .mock-window-bar span:nth-child(2) { background: #f2bc63; }
+.hero .mock-window-bar span:nth-child(3) { background: #8fd8c4; }
+
+.hero .mock-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.hero .mock-stat {
+    background: #ffffff;
+    border: 1px solid var(--hero-border);
+    border-radius: 1rem;
+    margin: 0;
+    padding: 1.3rem 1.6rem;
+    text-align: left;
+}
+
+.hero .mock-stat dt,
+.hero .mock-change {
+    color: #999999;
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+.hero .mock-stat dd {
+    color: var(--hero-ink);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 1.1;
+    margin: 0.8rem 0;
+}
+
+.hero .mock-change { font-weight: 500; }
+.hero .mock-change-negative { color: #e53e3e; }
+.hero .mock-change-positive { color: #09976d; }
+
+.hero .mock-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #ffffff;
+    border: 1px solid var(--hero-border);
+    border-radius: 1rem;
+    padding: 1.3rem 2.2rem;
+}
+
+.hero .mock-bar-row {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+}
+
+.hero .mock-cat {
+    color: #656565;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.hero .mock-bar-track {
+    height: 0.8rem;
+    background: var(--hero-track);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.hero .mock-bar {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.hero .mock-bar-food { background: #c78300; }
+.hero .mock-bar-travel { background: #0072b2; }
+.hero .mock-bar-bills { background: #a43868; }
+
+@media (max-width: 900px) {
+    .hero {
+        gap: 3.5rem;
+        padding: 3.75rem 1.5rem 4rem;
+    }
+
+    .hero .hero-visual { display: block; }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        gap: 3rem;
+        padding: 3rem 1rem 3.5rem;
+    }
+
+    .hero .hero-badge {
+        font-size: 0.85rem;
+        margin-bottom: 2.25rem;
+        padding: 0.3rem 0.9rem;
+    }
+
+    .hero .hero-title {
+        font-size: clamp(2.35rem, 12vw, 3.5rem);
+        letter-spacing: -0.05em;
+    }
+
+    .hero .hero-subtitle { margin-top: 1.5rem; }
+    .hero .hero-desktop-break { display: none; }
+
+    .hero .hero-actions {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .hero .btn-primary,
+    .hero .btn-ghost {
+        min-width: 0;
+        width: min(100%, 19rem);
+    }
+
+    .hero .mock-card { padding: 1rem; }
+
+    .hero .mock-window-bar {
+        gap: 0.45rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero .mock-window-bar span {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+
+    .hero .mock-stats { gap: 0.5rem; }
+
+    .hero .mock-stat {
+        border-radius: 0.75rem;
+        padding: 0.8rem;
+    }
+
+    .hero .mock-stat dt,
+    .hero .mock-change { font-size: 0.7rem; }
+
+    .hero .mock-stat dd {
+        font-size: clamp(1.05rem, 5vw, 1.35rem);
+        margin: 0.5rem 0;
+    }
+
+    .hero .mock-bars {
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .hero .mock-bar-row {
+        grid-template-columns: 3.5rem minmax(0, 1fr);
+        gap: 0.5rem;
+    }
+
+    .hero .mock-cat { font-size: 0.8rem; }
+    .hero .mock-bar-track { height: 0.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero .btn-primary,
+    .hero .btn-ghost { transition: none; }
+}
