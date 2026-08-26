@@ -73,6 +73,22 @@ def create_user(name, email, password):
         connection.close()
 
 
+def get_user_profile(user_id):
+    connection = get_db()
+
+    try:
+        return connection.execute(
+            """
+            SELECT id, name, email, created_at
+            FROM users
+            WHERE id = ?
+            """,
+            (user_id,),
+        ).fetchone()
+    finally:
+        connection.close()
+
+
 def authenticate_user(email, password):
     connection = get_db()
 
