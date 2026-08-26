@@ -2,13 +2,49 @@
 
 {% block title %}Profile — Spendly{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
 {% block content %}
-<section class="auth-section">
-    <div class="auth-container">
-        <div class="auth-card">
-            <p>Profile page — coming in Step 4</p>
+<section class="profile-page" aria-labelledby="profile-title">
+    <div class="profile-container">
+        <div class="profile-intro">
+            <p class="profile-eyebrow">Your account</p>
+            <h1 class="profile-title" id="profile-title">Hello, {{ user.name }}</h1>
+            <p class="profile-subtitle">Your Spendly account details, all in one place.</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-identity">
+                <span class="profile-avatar" aria-hidden="true">{{ user.name[0] | upper }}</span>
+                <div class="profile-identity-copy">
+                    <h2 class="profile-name">{{ user.name }}</h2>
+                    <p class="profile-email">{{ user.email }}</p>
+                </div>
+            </div>
+
+            <dl class="profile-details">
+                <div class="profile-detail-card">
+                    <dt class="profile-detail-label">Email address</dt>
+                    <dd class="profile-detail-value">{{ user.email }}</dd>
+                </div>
+                <div class="profile-detail-card">
+                    <dt class="profile-detail-label">Member since</dt>
+                    <dd class="profile-detail-value">
+                        <time datetime="{{ user.created_at[:10] }}">{{ user.created_at | membership_date }}</time>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="profile-actions">
+            <div>
+                <h2 class="profile-actions-title">Sign out of Spendly</h2>
+                <p class="profile-actions-copy">Sign out when you are finished using your account.</p>
+            </div>
             <form action="{{ url_for('logout') }}" method="GET">
-                <button type="submit" class="btn-primary">Sign out</button>
+                <button type="submit" class="btn-primary profile-sign-out">Sign out</button>
             </form>
         </div>
     </div>

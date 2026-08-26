@@ -234,18 +234,6 @@ def test_authenticated_user_is_redirected_from_auth_routes(
         }
 
 
-def test_profile_placeholder_has_temporary_logout_button(client):
-    with client.session_transaction() as current_session:
-        current_session["user_id"] = 1
-
-    response = client.get("/profile")
-
-    assert response.status_code == 200
-    assert b"Profile page \xe2\x80\x94 coming in Step 4" in response.data
-    assert b'action="/logout" method="GET"' in response.data
-    assert response.data.count(b'<button type="submit"') == 1
-
-
 @pytest.mark.parametrize(
     ("path", "body"),
     [

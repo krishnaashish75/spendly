@@ -1,8 +1,15 @@
 import os
+from datetime import datetime
 
 from flask import Flask, redirect, render_template, request, session, url_for
 
-from database.db import authenticate_user, create_user, init_db, seed_db
+from database.db import (
+    authenticate_user,
+    create_user,
+    get_user_profile,
+    init_db,
+    seed_db,
+)
 
 
 app = Flask(__name__)
@@ -10,6 +17,17 @@ app.config["SECRET_KEY"] = os.environ.get(
     "SPENDLY_SECRET_KEY",
     "development-only-secret-key",
 )
+
+
+@app.template_filter("membership_date")
+def format_membership_date(created_at):
+    try:
+        member_since = datetime.fromisoformat(str(created_at))
+    except (TypeError, ValueError):
+        return created_at
+
+    return f"{member_since.strftime('%B')} {member_since.day}, {member_since.year}"
+
 
 with app.app_context():
     init_db()
@@ -131,7 +149,16 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = get_user_profile(user_id)
+    if not user:
+        session.clear()
+        return redirect(url_for("login"))
+
+    return render_template("profile.html", user=user)
 
 
 @app.route("/expenses/add")
